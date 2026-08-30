@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telemetry-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: telemetry
+  template:
+    metadata:
+      labels:
+        app: telemetry
+    spec:
+      containers:
+        - name: telemetry
+          image: akspracticeregistry.azurecr.io/telemetry:v4
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DATABASE_URL
+              value: "postgresql://myuser:root%4012345@postgres-service:5432/mydb"
+            - name: PORT
+              value: "8000"

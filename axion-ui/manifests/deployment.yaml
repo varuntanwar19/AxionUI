@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: axionui-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: axion-ui
+  template:
+    metadata:
+      labels:
+        app: axion-ui
+    spec:
+      containers:
+        - name: axionui
+          image: akspracticeregistry.azurecr.io/axionui:v3
+          ports:
+            - containerPort: 80

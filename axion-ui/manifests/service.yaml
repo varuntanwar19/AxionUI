@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: axionui-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 80 # React/Angular/Vue का Port (जैसे 3000 या 80)
+  selector:
+    app: axion-ui

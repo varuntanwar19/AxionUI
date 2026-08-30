@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: telemetry-service
+spec:
+  type: LoadBalancer   # Public IP generate karega browser access ke liye
+  ports:
+    - port: 8000
+      targetPort: 8000
+
+  selector:
+    app: telemetry
