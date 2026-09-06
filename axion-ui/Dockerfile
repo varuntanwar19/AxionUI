@@ -3,6 +3,11 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+# --- Dynamic Build Argument & Env Variable ---
+ARG VITE_API_URL=http://telemetry.twivaraai.online
+ENV VITE_API_URL=$VITE_API_URL
+# ---------------------------------------------
+
 COPY package*.json ./
 RUN npm install
 

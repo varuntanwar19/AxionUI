@@ -15,7 +15,7 @@ import { SystemSettings } from './components/pages/SystemSettings';
 import { DashboardView } from './components/pages/DashboardView';
 import { NotFound } from './components/pages/NotFound';
 
-const API_BASE = 'http://dny-ai.store:8000';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://telemetry.twivaraai.online';
 
 function App() {
   const location = useLocation();

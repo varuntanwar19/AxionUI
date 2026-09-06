@@ -1,17 +1,19 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: axionui-ingress
-spec:
-  ingressClassName: azure-application-gateway # या nginx (बिना quotes के)
-  rules:
-    - host: axionui.dny-ai.store
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: axionui-service
-                port:
-                  number: 8080
+  apiVersion: networking.k8s.io/v1
+  kind: Ingress
+  metadata:
+    name: axionui-ingress
+    annotations:
+      appgw.ingress.kubernetes.io/ssl-redirect: "false"
+  spec:
+    ingressClassName: azure-application-gateway
+    rules:
+      - host: axionui.twivaraai.online
+        http:
+          paths:
+            - path: /
+              pathType: Prefix
+              backend:
+                service:
+                  name: axionui-service
+                  port:
+                    number: 8080

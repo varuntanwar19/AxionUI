@@ -11,14 +11,32 @@ spec:
     metadata:
       labels:
         app: telemetry
+        azure.workload.identity/use: "true"
     spec:
+      serviceAccountName: sa
       containers:
         - name: telemetry
-          image: akspracticeregistry.azurecr.io/telemetry:v4
+          image: axionacr2029.azurecr.io/telemetry:v1
           ports:
             - containerPort: 8000
+          envFrom:
+          - configMapRef:
+              name: telemetry-config
           env:
             - name: DATABASE_URL
-              value: "postgresql://myuser:root%4012345@postgres-service:5432/mydb"
-            - name: PORT
-              value: "8000"
+              valueFrom:
+                secretKeyRef:
+                  name: telemetry-secrets
+                  key: DATABASE_URL
+          volumeMounts:
+          - name: telemetry-secrets
+            mountPath: "/mnt/secrets-store"
+            readOnly: true
+      volumes:
+          - name: telemetry-secrets
+            csi:
+              driver: secrets-store.csi.k8s.io
+              readOnly: true
+              volumeAttributes:
+                secretProviderClass: telemetry-kv
+          

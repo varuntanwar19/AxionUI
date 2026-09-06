@@ -7,7 +7,7 @@ import { Throughput } from '../Throughput';
 import { DigitalTwin } from '../DigitalTwin';
 import { ThermalCamera } from '../ThermalCamera';
 
-const API_BASE = 'http://dny-ai.store:8000';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://telemetry.twivaraai.online';
 
 interface DashboardViewProps {
   devices: any[];

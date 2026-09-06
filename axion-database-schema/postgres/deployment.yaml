@@ -1,26 +1,53 @@
 apiVersion: apps/v1
-kind:   Deployment
+kind: Deployment
 metadata:
-  name: axiondb-deployment
+  name: postgres-deployment
 spec:
   replicas: 1
-  selector: 
+  selector:
     matchLabels:
       app: postgres
   template:
-    metadata: 
+    metadata:
       labels:
         app: postgres
+        azure.workload.identity/use: "true"
     spec:
+      serviceAccountName: sa
       containers:
-      - name: postgres
-        image:  postgres:15-alpine
-        ports:
-        - containerPort: 5432
-        env:
-            - name: POSTGRES_DB
-              value: "mydb"
+        - name: postgres
+          image: postgres:15-alpine
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: postgres-config
+          env:
             - name: POSTGRES_USER
-              value: "myuser"
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_USER
             - name: POSTGRES_PASSWORD
-              value: "root@12345"
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_DB
+          volumeMounts:
+            - name: postgres-secrets
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+      volumes:
+        - name: postgres-secrets
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: postgres-kv
+          
+       

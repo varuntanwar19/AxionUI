@@ -8,8 +8,8 @@ from datetime import datetime, timezone
 # Configuration
 # ---------------------------------------------------------------------------
 # Point to the ingestion service
-API_URL = os.getenv("API_URL", "http://axion-ingestion-service.default.svc.cluster.local:80/api/v1/telemetry/ingest")
-INTERVAL_SECONDS = int(os.getenv("INTERVAL_SECONDS", "5"))
+API_URL = os.getenv("API_URL", "http://ingestion-service.default.svc.cluster.local:80/api/v1/telemetry/ingest")
+INTERVAL_SECONDS = int(os.getenv("INTERVAL_SECONDS"))
 
 # ---------------------------------------------------------------------------
 # Device Catalog

@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind:   Deployment
+metadata:
+  name: simulator-deployment
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: simulator
+  template:
+    metadata: 
+      labels:
+        app: simulator
+    spec:
+      containers:
+      - name: simulator
+        image: axionacr2029.azurecr.io/simulator:v1
+        envFrom:
+          - configMapRef:
+              name: simulator-config

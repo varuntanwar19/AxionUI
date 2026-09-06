@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: pgadmin-service
 spec:
-  type: ClusterIP   # Public IP generate karega browser access ke liye
+  type: ClusterIP  # Public IP generate karega browser access ke liye
   ports:
     - port: 80
       targetPort: 80

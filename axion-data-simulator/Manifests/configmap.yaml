@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: simulator-config
+data:
+  API_URL: "http://ingestion-service.default.svc.cluster.local:80/api/v1/telemetry/ingest"
+  INTERVAL_SECONDS: "5"
